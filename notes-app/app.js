@@ -1,4 +1,6 @@
 const yargs = require('yargs')
+const notes = require('./notes.js');
+
 yargs.version('1.1.0')
 
 yargs.command({
@@ -17,16 +19,22 @@ yargs.command({
         }
     },
     handler: function (argv) {
-        console.log("Başlık: ", argv.title);
-        console.log("İçerik: ", argv.body);
+        notes.addNote(argv.title, argv.body);
     }
 })
 
 yargs.command({
     command: 'remove',
     describe: 'Seçilen notu siler',
-    handler: function () {
-        console.log("Not siliniyor.");
+    builder: {
+        title: {
+            describe: 'Not Başlığı',
+            demandOption: true,
+            type: 'string'
+        }
+    },
+    handler: function (argv) {
+        notes.removeNote(argv.title)
     }
 })
 
