@@ -1,14 +1,17 @@
 const fs = require('fs') // okuma yapmak için
 const chalk = require('chalk')
 
-const addNote = function (title, body) {
+const addNote = (title, body) => {
     const notes = loadNotes(); // mevcut notlar yüklenir. array
+    // const dublicateNotes = notes.filter((note) => note.title === title)
+    const dublicateNote = notes.find((note) => note.title === title)
 
-    const dublicateNotes = notes.filter(function (note) {
-        return note.title === title
-    })
-
-    if (dublicateNotes.length === 0) { // hiçbir eşleşme sağlanmamışsa yeni not eklenir
+    // Debugging
+    console.log(dublicateNote);
+    debugger
+    
+    // if (dublicateNote.length === 0) { // hiçbir eşleşme sağlanmamışsa yeni not eklenir
+    if (!dublicateNote) { // tekrarlanmış not yoksa
         // array sonuna eleman eklmek için
         notes.push({
             title: title,
@@ -22,11 +25,10 @@ const addNote = function (title, body) {
 
 }
 
-const removeNote = function (title) {
+const removeNote = (title) => {
     const notes = loadNotes()
-    const notesToKeep = notes.filter(function (note) {
-        return note.title !== title // title'a eşit olmayanları sakla
-    })
+    // title'a eşit olmayanları sakla
+    const notesToKeep = notes.filter((note) => note.title !== title)
     if (notes.length > notesToKeep.length) { // saklamak istediğim notların sayısı ile silmek istediğim not sayısından büyük ise
         console.log(chalk.green.inverse("Not silindi")) // yazı rengiyle arka planın tersi renk olması : inverse
         saveNotes(notesToKeep)
@@ -35,11 +37,28 @@ const removeNote = function (title) {
     }
 }
 
-const getNotes = function () {
+const listNotes = () => {
+    const notes = loadNotes() // dosyadan okuma islemi
 
+    console.log(chalk.inverse("Kayıtlı notlar: "));
+    notes.forEach(note => {
+        console.log(note.title);
+    });
 }
 
-const loadNotes = function () { // dosydan okuma işlemi yapcak
+const readNotes = (title) => {
+    const notes = loadNotes()
+    const note = notes.find((note) => note.title === title)
+
+    if (note) {
+        console.log(chalk.inverse(note.title));
+        console.log(note.body);
+    } else {
+        console.log(chalk.red.inverse("Bu başlığa sahip bir not bulunamamıştır."));
+    }
+}
+
+const loadNotes = () => { // dosydan okuma işlemi yapcak
     try {
         // read from file
         const dataBuffer = fs.readFileSync('notes.json')
@@ -52,13 +71,14 @@ const loadNotes = function () { // dosydan okuma işlemi yapcak
     }
 }
 
-const saveNotes = function (notes) {
+const saveNotes = (notes) => {
     const dataJSON = JSON.stringify(notes)
     fs.writeFileSync('notes.json', dataJSON)
 }
 
 module.exports = {
-    getNotes: getNotes,
     addNote: addNote,
-    removeNote: removeNote
+    removeNote: removeNote,
+    listNotes: listNotes,
+    readNotes: readNotes
 };

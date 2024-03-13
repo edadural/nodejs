@@ -18,7 +18,7 @@ yargs.command({
             type: 'string'
         }
     },
-    handler: function (argv) {
+    handler(argv) {
         notes.addNote(argv.title, argv.body);
     }
 })
@@ -33,7 +33,7 @@ yargs.command({
             type: 'string'
         }
     },
-    handler: function (argv) {
+    handler(argv) {
         notes.removeNote(argv.title)
     }
 })
@@ -41,16 +41,23 @@ yargs.command({
 yargs.command({
     command: 'list',
     describe: 'Mevcut notları listeler',
-    handler: function () {
-        console.log("Notlar listeleniyor.");
+    handler() {
+        notes.listNotes()
     }
 })
 
 yargs.command({
     command: 'read',
     describe: 'Seçilen notu gösterir',
-    handler: function () {
-        console.log("Not gösteriliyor.");
+    builder: {
+        title: {
+            describe: 'Not Başlığı',
+            demandOption: true,
+            type: 'string'
+        }
+    },
+    handler(argv) {
+        notes.readNotes(argv.title)
     }
 })
 
