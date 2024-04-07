@@ -6,16 +6,16 @@ if (!address) {
     console.log("adress bilgisini paramtere olarak veriniz.");
 }
 
-geocode(address, (error, data) => {
+geocode(address, (error, { longitude, latitude, location } = {}) => {
     if (error) {
         return console.log("Hata: ", error);
     }
 
-    forecast(data.longitude, data.latitude, (error, forecastData) => {
+    forecast(longitude, latitude, (error, forecastData) => {
+        console.log(location);
         if (error) {
             return console.log("Hata: ", error);
         }
-        console.log(data.location);
         console.log(forecastData);
     })
 });
