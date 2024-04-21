@@ -1,7 +1,44 @@
-h1 {
-    color: gray;
+body {
+    color: #3333;
+    font-family: Arial, Helvetica, sans-serif;
+    max-width: 650px;
+    margin: 0 auto;
+    padding: 16px;
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-img {
+.main-content {
+    flex-grow: 1;
+}
+
+footer {
+    color: #8888;
+    border-top: 1px solid #eeee;
+    margin-top: 16px;
+    padding: 16px 0;
+}
+
+header {
+    margin-top: 16px;
+    margin-bottom: 48px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 64px;
+    margin-bottom: 16px;
+}
+
+header a {
+    color: #888888;
+    display: inline-block;
+    margin-right: 16px;
+    text-decoration: none;
+}
+
+.portrait {
     width: 250px;
 }
