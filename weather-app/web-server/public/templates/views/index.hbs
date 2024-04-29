@@ -3,16 +3,26 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="/css/style.css">
-    <script src="/js/app.js"></script>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="icon" href="../../img/logo.png">
 </head>
 
 <body>
-    <div class=“main-content”>
+    <div class="main-content">
         {{>header}}
         <p>Hava Durumu Bilgisini ögrenmek için Web sitemizi kullanabilirsiniz </p>
+
+        <form>
+            <input placeholder="Şehir">
+            <button>Gönder</button>
+        </form>
+        <p id="message-1"></p>
+        <p id="message-2"></p>
+        
     </div>
     {{>footer}}
+
+    <script src="/js/app.js"></script>
 </body>
 
 </html>
